@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Mysql 数据类型 | Koo&#39;s blog</title>
+
+  
+  <meta name="author" content="Koo">
+  
+
+  
+  <meta name="description" content="学习记录，每天进步一点点">
+  
+
+  
+  
+  <meta name="keywords" content="mysql">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Mysql 数据类型">
+
+  <meta property="og:site_name" content="Koo&#39;s blog">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Koo&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Koo&#39;s blog</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Mysql 数据类型</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/11/06/Mysql-数据类型/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-11-06T06:53:35.000Z">
+          2018-11-06
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><h3 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h3><blockquote>
+<ul>
+<li>TINYINT = 2^8 bit = 1字节</li>
+<li>SMALLINT = 2 * 2^8 bit = 2字节</li>
+<li>MEDIUMINT = 3 * 2^8 bit = 3字节</li>
+<li>INT = INTEGER = 4 * 2^8 bit = 4字节</li>
+<li>BIGINT = 8 * 2^8 bit = 8字节</li>
+</ul>
+</blockquote>
+<p><em>取值范围如果加了 unsigned，则最大值翻倍</em></p>
+<a id="more"></a>
+<h3 id="浮点型"><a href="#浮点型" class="headerlink" title="浮点型"></a>浮点型</h3><blockquote>
+<ul>
+<li>FLOAT = 4 * 2^8 = 4字节</li>
+<li>DOUBLE = 8 * 2^8 bit = 8字节</li>
+<li>DECIMAL 对DECIMAL(M,D) ，如果M&gt;D，为M+2，否则为D+2。</li>
+</ul>
+</blockquote>
+<p><em>D&lt;=M &amp;&amp; &amp;&amp; M&gt;=0 &amp;&amp; D&lt;=30, M&gt;=1 &amp;&amp; M&lt;=65。</em></p>
+<h3 id="日期和时间类型"><a href="#日期和时间类型" class="headerlink" title="日期和时间类型"></a>日期和时间类型</h3><blockquote>
+<ul>
+<li>DATE = 3字节 YYYY-MM-DD</li>
+<li>TIME = 3字节 HH:MM:SS</li>
+<li>YEAR = 1字节 YYYY</li>
+<li>DATETIME = 8字节 YYYY-MM-DD HH:MM:SS</li>
+<li>TIMESTAMP = 4字节 2147483647（类似INT）</li>
+</ul>
+</blockquote>
+<h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h3><blockquote>
+<ul>
+<li>CHAR = 2^8字节（定长，不区分大小写）</li>
+<li>VARCHAR = 2^16字节（变长，不区分大小写）</li>
+</ul>
+</blockquote>
+<p><em>char为定长，后面加空格，如果数据中末尾有空格会被去掉，且不区分大小写</em></p>
+<blockquote>
+<ul>
+<li>TINYBLOB = 2^8字节 不超过 255 个字符的二进制字符串</li>
+<li>TINYTEXT = 2^8字节</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>BLOB = 2^8 * 2^8 = 2^16字节</li>
+<li>TEXT = 2^8 * 2^8 = 2^16字节</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>MEDIUMBLOB = 2^8 <em> 2^8 </em> 2^8 = 2^24字节</li>
+<li>MEDIUMTEXT = 2^8 <em> 2^8 </em> 2^8 = 2^24字节</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>LONGBLOB = 2^8 <em> 2^8 </em> 2^8* 2^8 = 2^32字节</li>
+<li>LONGTEXT = 2^8 <em> 2^8 </em> 2^8* 2^8 = 2^32字节</li>
+</ul>
+</blockquote>
+<h2 id="其他说明"><a href="#其他说明" class="headerlink" title="其他说明"></a>其他说明</h2><h3 id="一个汉字占多少长度与编码有关：（MySQL-5-0-以上的版本）"><a href="#一个汉字占多少长度与编码有关：（MySQL-5-0-以上的版本）" class="headerlink" title="一个汉字占多少长度与编码有关：（MySQL 5.0 以上的版本）"></a>一个汉字占多少长度与编码有关：（MySQL 5.0 以上的版本）</h3><ul>
+<li>UTF－8：一个汉字（含繁体）＝3个字节 ；</li>
+<li>GBK：一个汉字＝2个字节</li>
+</ul>
+<h3 id="char-和-varchar-区别："><a href="#char-和-varchar-区别：" class="headerlink" title="char 和 varchar 区别："></a>char 和 varchar 区别：</h3><ul>
+<li>CHAR和VARCHAR在存储或检索过程中不进行大小写转换。</li>
+<li>char(n) 若存入字符数小于n，则以空格补于其后，查询之时再将空格去掉。所以 char 类型存储的字符串末尾不能有空格，varchar 不限于此。</li>
+<li>char(n) 固定长度，char(4) 不管是存入几个字符，都将占用 4 个字节，varchar 是存入的实际字符数 +1 个字节（n&lt;=255）或2个字节(n&gt;255)，多的字节用来记录长度。所以 varchar(4),存入 3 个字符将占用 4 个字节。</li>
+<li>char 类型的字符串检索速度要比 varchar 类型的快。</li>
+</ul>
+<h3 id="varchar-和-text-区别："><a href="#varchar-和-text-区别：" class="headerlink" title="varchar 和 text 区别："></a>varchar 和 text 区别：</h3><ul>
+<li>varchar 可指定 n，text 不能指定，内部存储 varchar 是存入的实际字符数 +1 个字节（n&lt;=255）或 2 个字节(n&gt;255)，text 是实际字符数 +2 个字节。</li>
+<li>text 类型不能有默认值。</li>
+<li>varchar 可直接创建索引，text 创建索引指定索引前缀的长度。varchar 查询速度快于 text, 在都创建索引的情况下，text 的索引似乎不起作用。</li>
+</ul>
+<h3 id="二进制数据-Blob-和-text-区别："><a href="#二进制数据-Blob-和-text-区别：" class="headerlink" title="二进制数据(_Blob) 和 text 区别："></a>二进制数据(_Blob) 和 text 区别：</h3><ul>
+<li>BLOB 是一个二进制大对象</li>
+<li>_BLOB和_text存储方式不同，_TEXT以文本方式存储，英文存储区分大小写，而_Blob是以二进制方式存储，不分大小写。</li>
+<li>_BLOB存储的数据只能整体读出。</li>
+<li>_TEXT可以指定字符集，_BLO不用指定字符集。</li>
+</ul>
+<h3 id="ENUM-和-SET-区别："><a href="#ENUM-和-SET-区别：" class="headerlink" title="ENUM 和 SET 区别："></a>ENUM 和 SET 区别：</h3><ul>
+<li>ENUM = 1字节或2字节 最多2字节（2^16）</li>
+<li>ENUM是一个字符串对象，可以插入空字符串””（索引：0）和NULL（索引：NULL），从1开始编号。其值来自表创建时在列规定中显式枚举的一列值</li>
+<li>SET = 1字节或2字节或3字节或4字节或8字节</li>
+<li>SET是一个字符串对象，可以有零或多个值，最多可以设置64个值，其值来自表创建时规定的允许的一列值</li>
+</ul>
+<p>来源：<br><a href="http://www.runoob.com/mysql/mysql-data-types.html" target="_blank" rel="noopener">http://www.runoob.com/mysql/mysql-data-types.html</a><br><a href="https://www.cnblogs.com/Caveolae/p/7058890.html" target="_blank" rel="noopener">https://www.cnblogs.com/Caveolae/p/7058890.html</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/mysql/">mysql</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    <br>
+    
+    &copy; 2018 Koo
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
