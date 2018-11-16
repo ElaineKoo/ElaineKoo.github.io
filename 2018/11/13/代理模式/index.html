@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>代理模式 | Koo&#39;s blog</title>
+
+  
+  <meta name="author" content="Koo">
+  
+
+  
+  <meta name="description" content="学习记录，每天进步一点点">
+  
+
+  
+  
+  <meta name="keywords" content="设计模式,代理模式">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="代理模式">
+
+  <meta property="og:site_name" content="Koo&#39;s blog">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Koo&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Koo&#39;s blog</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>代理模式</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/11/13/代理模式/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-11-13T05:42:28.000Z">
+          2018-11-13
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>也叫委托模式，为其他对象提供一种代理，以控制对这个对象的访问。使用率非常高。提供非常好的访问控制。</p>
+<h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><ol>
+<li>Subject抽象主题角色。可以是抽象类也可以是接口</li>
+<li>RealSubject具体主题角色。也称为被委托角色或被代理角色，业务逻辑的具体执行者</li>
+<li>Proxy代理主题角色。也称为委托类、代理类</li>
+</ol>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public interface Subject &#123;</span><br><span class="line">    public void request();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class RealSubject implements Subject &#123;</span><br><span class="line">    public void request() &#123;</span><br><span class="line">        //业务逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Proxy implements Subject &#123;</span><br><span class="line">    private Subject subject = null;</span><br><span class="line">    </span><br><span class="line">    public Proxy() &#123;</span><br><span class="line">        this.subject = new Proxy();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Proxy(Subject subject) &#123;</span><br><span class="line">        this.subject = subject;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void request() &#123;</span><br><span class="line">        this.before();</span><br><span class="line">        this.subject.request();</span><br><span class="line">        this.after();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void before() &#123;&#125;</span><br><span class="line">    public void after() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+<li>职责清晰。真实角色就是实现实际的业务逻辑，不用关心其他非本职责的事务，通过后期的代理完成一件事务，附带的结果就是编程简洁清晰</li>
+<li>高扩展性。具体主题角色随时发生变化，不管怎么变化，只要实现了接口，那代理类完全就可以在不做任何修改的情况下使用。</li>
+</ol>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>Spring AOP</p>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><ol>
+<li>普通代理，要求客户端只能访问代理角色，而不能访问真实角色。<br>普通代理模式的约束问题，尽量通过团队内的变成规范类约束，因为每一个主题类是可被重用的和可维护的，实用技术约束的方式对系统维护是一种非常不利的因素</li>
+<li>强制代理，强制必须通过真是角色查找到代理角色，否则不能访问。只有通过真实角色指定的代理类才可以访问，由真是角色管理代理角色。可以不知道代理的存在，但是你的所作所为还是需要代理为你提供。</li>
+<li>代理是有个性的。代理类可以为真实角色预处理消息、过滤消息、消息转发、事后处理消息等功能。可以代理多个真实角色。</li>
+<li>动态代理。动态代理是在实现阶段不用关心代理谁，而在运行阶段才指定代理哪个对象。横切面编程（AOP）核心就是动态代理机制。？？</li>
+</ol>
+<p>来源：<br>《设计模式之禅》</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/设计模式/">设计模式</a><a href="/tags/代理模式/">代理模式</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    <br>
+    
+    &copy; 2018 Koo
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

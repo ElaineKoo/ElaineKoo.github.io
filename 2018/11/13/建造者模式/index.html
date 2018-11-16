@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>建造者模式 | Koo&#39;s blog</title>
+
+  
+  <meta name="author" content="Koo">
+  
+
+  
+  <meta name="description" content="学习记录，每天进步一点点">
+  
+
+  
+  
+  <meta name="keywords" content="设计模式,建造者模式">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="建造者模式">
+
+  <meta property="og:site_name" content="Koo&#39;s blog">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Koo&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Koo&#39;s blog</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>建造者模式</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/11/13/建造者模式/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-11-13T03:12:56.000Z">
+          2018-11-13
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="代码实例"><a href="#代码实例" class="headerlink" title="代码实例"></a>代码实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">public abstract class CarBuilder &#123;</span><br><span class="line">    //设置组装顺序</span><br><span class="line">    public abstract void setSequence(ArrayList&lt;String&gt; sequence);</span><br><span class="line">    //设置完毕顺序后，就可以直接拿到这个车辆模型</span><br><span class="line">    public abstract CarModel getCarModel();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class BenzBuilder extends CarBuilder &#123;</span><br><span class="line">    private BenzModel benz = new BenzModel();</span><br><span class="line">    //设置组装顺序</span><br><span class="line">    public void setSequence(ArrayList&lt;String&gt; sequence)&#123;</span><br><span class="line">        this.benz.setSequence(sequence);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //设置完毕顺序后，就可以直接拿到这个车辆模型</span><br><span class="line">    public CarModel getCarModel() &#123;</span><br><span class="line">        return this.benz;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class BMWBuilder extends CarBuilder &#123;</span><br><span class="line">    private BMWModel bmw = new BMWModel();</span><br><span class="line">    //设置组装顺序</span><br><span class="line">    public void setSequence(ArrayList&lt;String&gt; sequence)&#123;</span><br><span class="line">        this.bmw.setSequence(sequence);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //设置完毕顺序后，就可以直接拿到这个车辆模型</span><br><span class="line">    public CarModel getCarModel() &#123;</span><br><span class="line">        return this.bmw;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Director &#123;</span><br><span class="line">    private ArrayList&lt;String&gt; sequence = new ArrayList();</span><br><span class="line">    private BenzBuilder benzBuilder = new BenzBuilder();</span><br><span class="line">    private BMWBuilder bmwBuilder = new bmwBuilder();</span><br><span class="line">    </span><br><span class="line">    public BenzModel getABenzModel() &#123;</span><br><span class="line">        this.sequence.clear();</span><br><span class="line">        </span><br><span class="line">        this.sequesce.add(&quot;start&quot;);</span><br><span class="line">        this.sequesce.add(&quot;stop&quot;);</span><br><span class="line">        this.benzBuilder.setSequence(this.sequence);</span><br><span class="line">        return (BenzModel)this.benzBuilder.getCarModel();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Client &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Director director = new Director();</span><br><span class="line">        </span><br><span class="line">        for(int i = 0; i &lt; 1000; i++) &#123;</span><br><span class="line">            director.getABenzModel().run();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>需求是无底洞，是无理性的</em></p>
+<a id="more"></a>
+<h2 id="导演类"><a href="#导演类" class="headerlink" title="导演类"></a>导演类</h2><p>指挥各事件的先后顺序</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>也叫生成器模式，将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</p>
+<h2 id="四个角色"><a href="#四个角色" class="headerlink" title="四个角色"></a>四个角色</h2><ol>
+<li>Product产品类，实现模板方法模式</li>
+<li>Builder抽象建造类，规划产品的组建，一般由子类实现。CarBuilder</li>
+<li>ConcreteBuilder具体建造者，实现抽象类定义好的所有方法，并且返回一个组建好的对象。BenzBuilder和BMWBuilder</li>
+<li>Director导演类，负责安排已有模块顺序，告诉Builder开始建造。</li>
+</ol>
+<p><em>导演类起到封装的作用，避免高层模块深入到建造者内部的实现类。导演类可以有多个</em></p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+<li>封装性。使用建造者模式可以使客户端不必知道产品内部组成的细节。</li>
+<li>建造者独立，容易扩展。BenzBuilder和BMWBuilder互相独立，对系统的扩展非常有利</li>
+<li>便于控制细节风险。建造者独立，可对建造过程逐步细化，而不对其他模块产生任何影响</li>
+</ol>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ol>
+<li>相同的方法，不同的执行顺序，产生不同的事件结果时</li>
+<li>多个部件或零件，都可以装配到一个对象中，但是产生的运行结果又不相同时</li>
+<li>产品类非常复杂，或者产品类中的调用顺序不同产生了不同的效能时</li>
+<li>在对象创建过程中会使用到系统中的一些其他对象，这些对象在产品对象的创建过程中不易得到时。补偿方法，设计阶段没有发觉。</li>
+</ol>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>建造者模式关注的是零件类型和装配工艺（顺序），与工厂方法模式最大的不同。建造者模式最主要的功能是基本方法的调用顺序安排，顺序不同产生的对象也不同；工厂方法重点是创造，创建零件是它的主要职责，组装顺序则不是它关心的。<br>使用建造者模式的时候考虑一下模板方法模式。</p>
+<p>来源：<br>《设计模式之禅》</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/设计模式/">设计模式</a><a href="/tags/建造者模式/">建造者模式</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    <br>
+    
+    &copy; 2018 Koo
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>

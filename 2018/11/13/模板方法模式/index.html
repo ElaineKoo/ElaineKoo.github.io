@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>模板方法模式 | Koo&#39;s blog</title>
+
+  
+  <meta name="author" content="Koo">
+  
+
+  
+  <meta name="description" content="学习记录，每天进步一点点">
+  
+
+  
+  
+  <meta name="keywords" content="设计模式,模板方法模式">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="模板方法模式">
+
+  <meta property="og:site_name" content="Koo&#39;s blog">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Koo&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Koo&#39;s blog</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">Home</a></li>
+      
+        <li><a href="/archives">Archives</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>模板方法模式</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2018/11/13/模板方法模式/" rel="bookmark">
+        <time class="entry-date published" datetime="2018-11-13T02:17:06.000Z">
+          2018-11-13
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">//抽象悍马模型</span><br><span class="line">public abstract class HummerModel &#123;</span><br><span class="line">    public abstract void start();</span><br><span class="line">    public abstract void stop();</span><br><span class="line">    public abstract void alarm();</span><br><span class="line">    public abstract void engineBoom();</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        this.start(); </span><br><span class="line">        this.engineBoom(); </span><br><span class="line">        this.alarm(); </span><br><span class="line">        this.stop(); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//悍马模型H1</span><br><span class="line">public class HummerH1Model extends HummerModel &#123;</span><br><span class="line">    public void alarm() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void engineBoom() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void start() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void stop() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//悍马模型H2</span><br><span class="line">public class HummerH2Model extends HummerModel &#123;</span><br><span class="line">    public void alarm() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void engineBoom() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void start() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void stop() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Client() &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        HummerModel h1 = new HummerH1Model();</span><br><span class="line">        h1.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>在软件开发过程中，如果相同的一段代码复制过两次，就需要对设计产生怀疑，架构师要明确地说明为什么相同的逻辑要出现两次或更多次</em></p>
+<a id="more"></a>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。<br>常用设计模式</p>
+<h2 id="AbstractClass"><a href="#AbstractClass" class="headerlink" title="AbstractClass"></a>AbstractClass</h2><p>AbstractClass叫做抽象模板，方法分为：基本方法和模板方法，基本方法由子类实现，模板方法一般是一个具体的方法。为防止恶意修改，一般模板方法都加上final关键字，不允许被覆写。基本方法尽量设计为protected类型，符合迪米特法则，不需要暴露的属性或方法尽量不要设置为protected类型。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+<li>封装不变部分，扩展可变部分</li>
+<li>提取公共部分代码，便于维护</li>
+<li>行为由父类控制，子类实现。符合开闭原则</li>
+</ol>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>在复杂项目中，会带来代码阅读的难度，新手产生不适感</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><ol>
+<li>多个子类有公有的方法，而且逻辑基本相同时</li>
+<li>重要、、复杂的算法，可以把核心算法设计为模板方法，周边的相关细节功能则由各个子类实现</li>
+<li>重构时，模板方法模式是最常用的模式，把相同的代码抽取到父类中，然后通过钩子函数约束其行为</li>
+</ol>
+<h2 id="扩展——钩子方法"><a href="#扩展——钩子方法" class="headerlink" title="扩展——钩子方法"></a>扩展——钩子方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">//抽象悍马模型</span><br><span class="line">public abstract class HummerModel &#123;</span><br><span class="line">    public abstract void start();</span><br><span class="line">    public abstract void stop();</span><br><span class="line">    public abstract void alarm();</span><br><span class="line">    public abstract void engineBoom();</span><br><span class="line">    final public void run() &#123;</span><br><span class="line">        this.start(); </span><br><span class="line">        this.engineBoom(); </span><br><span class="line">        //this.alarm(); </span><br><span class="line">        if(this.isAlarm()) &#123;</span><br><span class="line">            this.alarm();</span><br><span class="line">        &#125;</span><br><span class="line">        this.stop(); </span><br><span class="line">    &#125;</span><br><span class="line">    //默认响喇叭，钩子方法</span><br><span class="line">    protected boolean isAlarm() &#123;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//悍马模型H1</span><br><span class="line">public class HummerH1Model extends HummerModel &#123;</span><br><span class="line">    private boolean alarmFlag = true;</span><br><span class="line">    public void alarm() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void engineBoom() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void start() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void stop() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    //设置是否响喇叭</span><br><span class="line">    public void setAlarm(boolean isAlarm) &#123;</span><br><span class="line">        this.alarmFlag = isAlarm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//悍马模型H2</span><br><span class="line">public class HummerH2Model extends HummerModel &#123;</span><br><span class="line">    public void alarm() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void engineBoom() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void start() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    public void stop() &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;    </span><br><span class="line">    //默认不响喇叭</span><br><span class="line">    protected boolean isAlarm() &#123;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Client() &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        HummerModel h1 = new HummerH1Model();</span><br><span class="line">        h1.setAlarm(false);</span><br><span class="line">        h1.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>外界条件改变，影响模板方法的执行，isAlarm的返回值影响了模板方法的执行结果，该方法叫做钩子方法（Hook Method）</em></p>
+<p>来源：<br>《设计模式之禅》</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/设计模式/">设计模式</a><a href="/tags/模板方法模式/">模板方法模式</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    <br>
+    
+    &copy; 2018 Koo
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
