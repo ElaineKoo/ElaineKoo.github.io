@@ -6,7 +6,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://ElaineKoo.github.io/"/>
-  <updated>2018-11-20T06:12:22.534Z</updated>
+  <updated>2018-11-20T10:03:27.779Z</updated>
   <id>http://ElaineKoo.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>适配器模式</title>
+    <link href="http://ElaineKoo.github.io/2018/11/20/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://ElaineKoo.github.io/2018/11/20/适配器模式/</id>
+    <published>2018-11-20T06:18:48.000Z</published>
+    <updated>2018-11-20T10:03:27.779Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>又叫变压器模式、包装模式，将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作</p><h2 id="三个角色"><a href="#三个角色" class="headerlink" title="三个角色"></a>三个角色</h2><ol><li>Target目标角色</li><li>Adaptee源角色</li><li>Adapter适配器角色</li></ol><a id="more"></a><h2 id="通用源码"><a href="#通用源码" class="headerlink" title="通用源码"></a>通用源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public interface Target &#123;</span><br><span class="line">    //目标角色有自己的方法</span><br><span class="line">    public void request();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public vlass ConcreteTarget implements Target &#123;</span><br><span class="line">    pubilc void request() &#123;</span><br><span class="line">        System.out.println(&quot;xxxx&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Adaptee &#123;</span><br><span class="line">    public void doSomething() &#123;</span><br><span class="line">        System.out.println(&quot;zzzzz&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public vlass Adapter extends Adaptee implements Target &#123;</span><br><span class="line">    public void request() &#123;</span><br><span class="line">        super.doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Clinet &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //原</span><br><span class="line">        Target target = new ConcreteTarget();</span><br><span class="line">        target.request();</span><br><span class="line">        //适配器</span><br><span class="line">        Target target2 = new Adapter();</span><br><span class="line">        target2.request();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol><li>适配器模式可以让两个没有任何关系的类在一起运行</li><li>增加了类的透明性</li><li>提高类的复用度</li><li>灵活性非常好</li></ol><h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>你有动机修改一个已经投产中的接口时</p><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>不要在开发阶段考虑，解决的是正在服役中的项目问题<br>项目一定要遵守依赖倒置原则和里氏替换原则</p><p>参考<br>《设计模式之禅》</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;定义&quot;&gt;&lt;a href=&quot;#定义&quot; class=&quot;headerlink&quot; title=&quot;定义&quot;&gt;&lt;/a&gt;定义&lt;/h2&gt;&lt;p&gt;又叫变压器模式、包装模式，将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作&lt;/p&gt;
+&lt;h2 id=&quot;三个角色&quot;&gt;&lt;a href=&quot;#三个角色&quot; class=&quot;headerlink&quot; title=&quot;三个角色&quot;&gt;&lt;/a&gt;三个角色&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Target目标角色&lt;/li&gt;
+&lt;li&gt;Adaptee源角色&lt;/li&gt;
+&lt;li&gt;Adapter适配器角色&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="http://ElaineKoo.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="适配器模式" scheme="http://ElaineKoo.github.io/tags/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>策略模式</title>
