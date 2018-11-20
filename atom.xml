@@ -6,7 +6,7 @@
   <link href="//atom.xml" rel="self"/>
   
   <link href="http://ElaineKoo.github.io/"/>
-  <updated>2018-11-20T10:03:27.779Z</updated>
+  <updated>2018-11-20T10:48:49.042Z</updated>
   <id>http://ElaineKoo.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>迭代器模式</title>
+    <link href="http://ElaineKoo.github.io/2018/11/20/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://ElaineKoo.github.io/2018/11/20/迭代器模式/</id>
+    <published>2018-11-20T10:16:30.000Z</published>
+    <updated>2018-11-20T10:48:49.042Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>它提供一种方法访问一个容器对象中的各个元素，而不需要暴露该对象的内部细节。<br>没落的模式，基本么有人会单独写一个迭代器。</p><h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><ol><li>Iterator抽象迭代器 first，next，isDone</li><li>ConcreteIterator具体迭代器</li><li>Aggregate抽象容器 容器角色负责提供创建具体迭代器角色的接口</li><li>ConcreteAggregate具体容器 实现容器接口定义的方法，创建出容纳迭代器的对象</li></ol><a id="more"></a><h2 id="通用源码"><a href="#通用源码" class="headerlink" title="通用源码"></a>通用源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">public interface Iterator &#123;</span><br><span class="line">    public Object next();</span><br><span class="line">    public boolean hasNext();</span><br><span class="line">    public boolean remove();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public ConcreteInterator implements Ieterator &#123;</span><br><span class="line">    private Vector vector = new Vector();</span><br><span class="line">    </span><br><span class="line">    public int cursor = 0;</span><br><span class="line">    </span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public ConcreteIeterator(Vector _vector) &#123;</span><br><span class="line">        this.vector = _vector;     </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean hasNext() &#123;</span><br><span class="line">        if(this.cursor == this.vector.size()) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Object next() &#123;</span><br><span class="line">        Object result = null;</span><br><span class="line">        if(this.hasNext()) &#123;</span><br><span class="line">            result = this.vector.get(this.cursor++);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            result = null;</span><br><span class="line">        &#125;</span><br><span class="line">        return result; </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean remove() &#123;</span><br><span class="line">        this.vector.remove(this.cursor);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface Aggregate &#123;</span><br><span class="line">    public void add(Object object);</span><br><span class="line">    public void remove(Object object);</span><br><span class="line">    public Iterator iterator();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ConcreteAggregate implements Aggregate &#123;</span><br><span class="line">    private Vector vector = new Vector();</span><br><span class="line">    public void add(Object object) &#123;</span><br><span class="line">        this.vector.add(object);</span><br><span class="line">    &#125;</span><br><span class="line">    public Iterator iterator() &#123;</span><br><span class="line">        return new ConcreteIterator(this.vector);</span><br><span class="line">    &#125;</span><br><span class="line">    public void remove(Object object) &#123;</span><br><span class="line">        this.remove(object);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Client &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Aggregate agg = new ConcreteAggregate();</span><br><span class="line">        agg.add(&quot;abc&quot;);</span><br><span class="line">        agg.add(&quot;aaa&quot;);</span><br><span class="line">        agg.add(&quot;1234&quot;);</span><br><span class="line">        </span><br><span class="line">        Iterator iterator = agg.iterator();</span><br><span class="line">        while(iterator.hasNext()) &#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>参考<br>《设计模式之禅》</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;定义&quot;&gt;&lt;a href=&quot;#定义&quot; class=&quot;headerlink&quot; title=&quot;定义&quot;&gt;&lt;/a&gt;定义&lt;/h2&gt;&lt;p&gt;它提供一种方法访问一个容器对象中的各个元素，而不需要暴露该对象的内部细节。&lt;br&gt;没落的模式，基本么有人会单独写一个迭代器。&lt;/p&gt;
+&lt;h2 id=&quot;角色&quot;&gt;&lt;a href=&quot;#角色&quot; class=&quot;headerlink&quot; title=&quot;角色&quot;&gt;&lt;/a&gt;角色&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Iterator抽象迭代器 first，next，isDone&lt;/li&gt;
+&lt;li&gt;ConcreteIterator具体迭代器&lt;/li&gt;
+&lt;li&gt;Aggregate抽象容器 容器角色负责提供创建具体迭代器角色的接口&lt;/li&gt;
+&lt;li&gt;ConcreteAggregate具体容器 实现容器接口定义的方法，创建出容纳迭代器的对象&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="http://ElaineKoo.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="迭代器模式" scheme="http://ElaineKoo.github.io/tags/%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>适配器模式</title>

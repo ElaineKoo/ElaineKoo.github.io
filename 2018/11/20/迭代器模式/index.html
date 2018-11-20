@@ -85,7 +85,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="设计模式,适配器模式,">
+  <meta name="keywords" content="设计模式,迭代器模式,">
 
 
 
@@ -103,18 +103,18 @@
 
 
 
-<meta name="description" content="定义又叫变压器模式、包装模式，将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作 三个角色 Target目标角色 Adaptee源角色 Adapter适配器角色">
-<meta name="keywords" content="设计模式,适配器模式">
+<meta name="description" content="定义它提供一种方法访问一个容器对象中的各个元素，而不需要暴露该对象的内部细节。没落的模式，基本么有人会单独写一个迭代器。 角色 Iterator抽象迭代器 first，next，isDone ConcreteIterator具体迭代器 Aggregate抽象容器 容器角色负责提供创建具体迭代器角色的接口 ConcreteAggregate具体容器 实现容器接口定义的方法，创建出容纳迭代器的对象">
+<meta name="keywords" content="设计模式,迭代器模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="适配器模式">
-<meta property="og:url" content="http://ElaineKoo.github.io/2018/11/20/适配器模式/index.html">
+<meta property="og:title" content="迭代器模式">
+<meta property="og:url" content="http://ElaineKoo.github.io/2018/11/20/迭代器模式/index.html">
 <meta property="og:site_name" content="Koo&#39;s blog">
-<meta property="og:description" content="定义又叫变压器模式、包装模式，将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作 三个角色 Target目标角色 Adaptee源角色 Adapter适配器角色">
+<meta property="og:description" content="定义它提供一种方法访问一个容器对象中的各个元素，而不需要暴露该对象的内部细节。没落的模式，基本么有人会单独写一个迭代器。 角色 Iterator抽象迭代器 first，next，isDone ConcreteIterator具体迭代器 Aggregate抽象容器 容器角色负责提供创建具体迭代器角色的接口 ConcreteAggregate具体容器 实现容器接口定义的方法，创建出容纳迭代器的对象">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-20T10:03:27.779Z">
+<meta property="og:updated_time" content="2018-11-20T10:48:49.042Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="适配器模式">
-<meta name="twitter:description" content="定义又叫变压器模式、包装模式，将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作 三个角色 Target目标角色 Adaptee源角色 Adapter适配器角色">
+<meta name="twitter:title" content="迭代器模式">
+<meta name="twitter:description" content="定义它提供一种方法访问一个容器对象中的各个元素，而不需要暴露该对象的内部细节。没落的模式，基本么有人会单独写一个迭代器。 角色 Iterator抽象迭代器 first，next，isDone ConcreteIterator具体迭代器 Aggregate抽象容器 容器角色负责提供创建具体迭代器角色的接口 ConcreteAggregate具体容器 实现容器接口定义的方法，创建出容纳迭代器的对象">
 
 
 
@@ -143,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://ElaineKoo.github.io/2018/11/20/适配器模式/">
+  <link rel="canonical" href="http://ElaineKoo.github.io/2018/11/20/迭代器模式/">
 
 
 
 
 
-  <title>适配器模式 | Koo's blog</title>
+  <title>迭代器模式 | Koo's blog</title>
   
 
 
@@ -304,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://ElaineKoo.github.io/2018/11/20/适配器模式/">
+    <link itemprop="mainEntityOfPage" href="http://ElaineKoo.github.io/2018/11/20/迭代器模式/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Koo">
@@ -321,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">适配器模式</h1>
+          <h1 class="post-title" itemprop="name headline">迭代器模式</h1>
         
 
         <div class="post-meta">
@@ -333,7 +333,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-20T14:18:48+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-20T18:16:30+08:00">
                 2018-11-20
               </time>
             
@@ -351,7 +351,7 @@
 
           
           
-             <span id="/2018/11/20/适配器模式/" class="leancloud_visitors" data-flag-title="适配器模式">
+             <span id="/2018/11/20/迭代器模式/" class="leancloud_visitors" data-flag-title="迭代器模式">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  307
+                  344
                 </span>
               
 
@@ -416,22 +416,15 @@
       
 
       
-        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>又叫变压器模式、包装模式，将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作</p>
-<h2 id="三个角色"><a href="#三个角色" class="headerlink" title="三个角色"></a>三个角色</h2><ol>
-<li>Target目标角色</li>
-<li>Adaptee源角色</li>
-<li>Adapter适配器角色</li>
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>它提供一种方法访问一个容器对象中的各个元素，而不需要暴露该对象的内部细节。<br>没落的模式，基本么有人会单独写一个迭代器。</p>
+<h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><ol>
+<li>Iterator抽象迭代器 first，next，isDone</li>
+<li>ConcreteIterator具体迭代器</li>
+<li>Aggregate抽象容器 容器角色负责提供创建具体迭代器角色的接口</li>
+<li>ConcreteAggregate具体容器 实现容器接口定义的方法，创建出容纳迭代器的对象</li>
 </ol>
 <a id="more"></a>
-<h2 id="通用源码"><a href="#通用源码" class="headerlink" title="通用源码"></a>通用源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public interface Target &#123;</span><br><span class="line">    //目标角色有自己的方法</span><br><span class="line">    public void request();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public vlass ConcreteTarget implements Target &#123;</span><br><span class="line">    pubilc void request() &#123;</span><br><span class="line">        System.out.println(&quot;xxxx&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Adaptee &#123;</span><br><span class="line">    public void doSomething() &#123;</span><br><span class="line">        System.out.println(&quot;zzzzz&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public vlass Adapter extends Adaptee implements Target &#123;</span><br><span class="line">    public void request() &#123;</span><br><span class="line">        super.doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Clinet &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //原</span><br><span class="line">        Target target = new ConcreteTarget();</span><br><span class="line">        target.request();</span><br><span class="line">        //适配器</span><br><span class="line">        Target target2 = new Adapter();</span><br><span class="line">        target2.request();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
-<li>适配器模式可以让两个没有任何关系的类在一起运行</li>
-<li>增加了类的透明性</li>
-<li>提高类的复用度</li>
-<li>灵活性非常好</li>
-</ol>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>你有动机修改一个已经投产中的接口时</p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>不要在开发阶段考虑，解决的是正在服役中的项目问题<br>项目一定要遵守依赖倒置原则和里氏替换原则</p>
+<h2 id="通用源码"><a href="#通用源码" class="headerlink" title="通用源码"></a>通用源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">public interface Iterator &#123;</span><br><span class="line">    public Object next();</span><br><span class="line">    public boolean hasNext();</span><br><span class="line">    public boolean remove();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public ConcreteInterator implements Ieterator &#123;</span><br><span class="line">    private Vector vector = new Vector();</span><br><span class="line">    </span><br><span class="line">    public int cursor = 0;</span><br><span class="line">    </span><br><span class="line">    @SuppressWarnings(&quot;unchecked&quot;)</span><br><span class="line">    public ConcreteIeterator(Vector _vector) &#123;</span><br><span class="line">        this.vector = _vector;     </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean hasNext() &#123;</span><br><span class="line">        if(this.cursor == this.vector.size()) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Object next() &#123;</span><br><span class="line">        Object result = null;</span><br><span class="line">        if(this.hasNext()) &#123;</span><br><span class="line">            result = this.vector.get(this.cursor++);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            result = null;</span><br><span class="line">        &#125;</span><br><span class="line">        return result; </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public boolean remove() &#123;</span><br><span class="line">        this.vector.remove(this.cursor);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public interface Aggregate &#123;</span><br><span class="line">    public void add(Object object);</span><br><span class="line">    public void remove(Object object);</span><br><span class="line">    public Iterator iterator();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ConcreteAggregate implements Aggregate &#123;</span><br><span class="line">    private Vector vector = new Vector();</span><br><span class="line">    public void add(Object object) &#123;</span><br><span class="line">        this.vector.add(object);</span><br><span class="line">    &#125;</span><br><span class="line">    public Iterator iterator() &#123;</span><br><span class="line">        return new ConcreteIterator(this.vector);</span><br><span class="line">    &#125;</span><br><span class="line">    public void remove(Object object) &#123;</span><br><span class="line">        this.remove(object);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Client &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Aggregate agg = new ConcreteAggregate();</span><br><span class="line">        agg.add(&quot;abc&quot;);</span><br><span class="line">        agg.add(&quot;aaa&quot;);</span><br><span class="line">        agg.add(&quot;1234&quot;);</span><br><span class="line">        </span><br><span class="line">        Iterator iterator = agg.iterator();</span><br><span class="line">        while(iterator.hasNext()) &#123;</span><br><span class="line">            System.out.println(iterator.next());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>参考<br>《设计模式之禅》</p>
 
       
@@ -453,7 +446,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://ElaineKoo.github.io/2018/11/20/适配器模式/" title="适配器模式">http://ElaineKoo.github.io/2018/11/20/适配器模式/</a>
+    <a href="http://ElaineKoo.github.io/2018/11/20/迭代器模式/" title="迭代器模式">http://ElaineKoo.github.io/2018/11/20/迭代器模式/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -470,7 +463,7 @@
           
             <a href="/tags/设计模式/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
           
-            <a href="/tags/适配器模式/" rel="tag"><i class="fa fa-tag"></i> 适配器模式</a>
+            <a href="/tags/迭代器模式/" rel="tag"><i class="fa fa-tag"></i> 迭代器模式</a>
           
         </div>
       
@@ -483,8 +476,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/20/策略模式/" rel="next" title="策略模式">
-                <i class="fa fa-chevron-left"></i> 策略模式
+              <a href="/2018/11/20/适配器模式/" rel="next" title="适配器模式">
+                <i class="fa fa-chevron-left"></i> 适配器模式
               </a>
             
           </div>
@@ -492,10 +485,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/20/迭代器模式/" rel="prev" title="迭代器模式">
-                迭代器模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -625,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三个角色"><span class="nav-number">2.</span> <span class="nav-text">三个角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用源码"><span class="nav-number">3.</span> <span class="nav-text">通用源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">4.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">6.</span> <span class="nav-text">注意事项</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#角色"><span class="nav-number">2.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用源码"><span class="nav-number">3.</span> <span class="nav-text">通用源码</span></a></li></ol></div>
             
 
           </div>
