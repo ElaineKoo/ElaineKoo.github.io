@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Koo&#39;s blog">
 <meta property="og:description" content="定义又叫变压器模式、包装模式，将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作 三个角色 Target目标角色 Adaptee源角色 Adapter适配器角色">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-20T10:03:27.779Z">
+<meta property="og:updated_time" content="2018-11-21T06:07:34.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="适配器模式">
 <meta name="twitter:description" content="定义又叫变压器模式、包装模式，将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作 三个角色 Target目标角色 Adaptee源角色 Adapter适配器角色">
@@ -423,7 +423,7 @@
 <li>Adapter适配器角色</li>
 </ol>
 <a id="more"></a>
-<h2 id="通用源码"><a href="#通用源码" class="headerlink" title="通用源码"></a>通用源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public interface Target &#123;</span><br><span class="line">    //目标角色有自己的方法</span><br><span class="line">    public void request();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public vlass ConcreteTarget implements Target &#123;</span><br><span class="line">    pubilc void request() &#123;</span><br><span class="line">        System.out.println(&quot;xxxx&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Adaptee &#123;</span><br><span class="line">    public void doSomething() &#123;</span><br><span class="line">        System.out.println(&quot;zzzzz&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public vlass Adapter extends Adaptee implements Target &#123;</span><br><span class="line">    public void request() &#123;</span><br><span class="line">        super.doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Clinet &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //原</span><br><span class="line">        Target target = new ConcreteTarget();</span><br><span class="line">        target.request();</span><br><span class="line">        //适配器</span><br><span class="line">        Target target2 = new Adapter();</span><br><span class="line">        target2.request();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通用源码"><a href="#通用源码" class="headerlink" title="通用源码"></a>通用源码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public interface Target &#123;</span><br><span class="line">    //目标角色有自己的方法</span><br><span class="line">    public void request();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public vlass ConcreteTarget implements Target &#123;</span><br><span class="line">    pubilc void request() &#123;</span><br><span class="line">        System.out.println(&quot;xxxx&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Adaptee &#123;</span><br><span class="line">    public void doSomething() &#123;</span><br><span class="line">        System.out.println(&quot;zzzzz&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public vlass Adapter extends Adaptee implements Target &#123;</span><br><span class="line">    public void request() &#123;</span><br><span class="line">        super.doSomething();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Client &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //原</span><br><span class="line">        Target target = new ConcreteTarget();</span><br><span class="line">        target.request();</span><br><span class="line">        //适配器</span><br><span class="line">        Target target2 = new Adapter();</span><br><span class="line">        target2.request();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
 <li>适配器模式可以让两个没有任何关系的类在一起运行</li>
 <li>增加了类的透明性</li>
@@ -570,7 +570,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -583,7 +583,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -678,7 +678,7 @@
 </div>
 
 <div class="theme-info">
-  <span class="post-count">博客全站共11.6k字</span>
+  <span class="post-count">博客全站共14.4k字</span>
 </div>
         
 
