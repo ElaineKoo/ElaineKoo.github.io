@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Koo&#39;s blog">
 <meta property="og:description" content="定义动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式相比生成子类更加灵活。 四个角色 Component抽象构件 定义最核心、最原始的对象 ConcreteComponent具体构件 最核心、最原始的对象的实现 Decorator装饰角色 一般是一个抽象类，实现接口或者抽象方法，里面不一定有抽象的方法，属性里必然有一个private变量指向Component抽象构件 具体装饰角色">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-20T02:45:20.269Z">
+<meta property="og:updated_time" content="2018-12-17T06:22:48.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="装饰模式">
 <meta name="twitter:description" content="定义动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式相比生成子类更加灵活。 四个角色 Component抽象构件 定义最核心、最原始的对象 ConcreteComponent具体构件 最核心、最原始的对象的实现 Decorator装饰角色 一般是一个抽象类，实现接口或者抽象方法，里面不一定有抽象的方法，属性里必然有一个private变量指向Component抽象构件 具体装饰角色">
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  469
+                  574
                 </span>
               
 
@@ -437,6 +437,10 @@
 <li>需要扩展一个类的功能，或给一个类增加附加功能</li>
 <li>需要动态地给一个对象增加功能，这些功能可以再动态地撤销</li>
 <li>需要为一批的兄弟类进行改装或加装功能，首选装饰模式</li>
+</ol>
+<h2 id="与其他模式对比"><a href="#与其他模式对比" class="headerlink" title="与其他模式对比"></a>与其他模式对比</h2><ol>
+<li>与代理模式比：装饰模式在保证接口不变的情况下加强类的功能，保证被修饰的对象功能比原始对象丰富，但不做准入条件判断和准入参数过滤</li>
+<li>与适配器模式比：装饰模式包装的是自己的兄弟类，隶属同一个家族。意图是加强对象的功能。</li>
 </ol>
 <p>参考<br>《设计模式之禅》</p>
 
@@ -576,7 +580,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -589,7 +593,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -631,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个角色"><span class="nav-number">2.</span> <span class="nav-text">四个角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用代码"><span class="nav-number">3.</span> <span class="nav-text">通用代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">4.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">5.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">6.</span> <span class="nav-text">使用场景</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个角色"><span class="nav-number">2.</span> <span class="nav-text">四个角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用代码"><span class="nav-number">3.</span> <span class="nav-text">通用代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">4.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">5.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">6.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与其他模式对比"><span class="nav-number">7.</span> <span class="nav-text">与其他模式对比</span></a></li></ol></div>
             
 
           </div>
@@ -654,8 +658,8 @@
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -684,7 +688,7 @@
 </div>
 
 <div class="theme-info">
-  <span class="post-count">博客全站共16.5k字</span>
+  <span class="post-count">博客全站共23.8k字</span>
 </div>
         
 

@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Koo&#39;s blog">
 <meta property="og:description" content="代码实例1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859public abstract class CarBuilder &amp;#123;    //设置组装顺序    public abstract void setSequence">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-19T04:30:35.979Z">
+<meta property="og:updated_time" content="2018-12-12T03:26:40.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="建造者模式">
 <meta name="twitter:description" content="代码实例1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859public abstract class CarBuilder &amp;#123;    //设置组装顺序    public abstract void setSequence">
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  808
+                  933
                 </span>
               
 
@@ -428,6 +428,7 @@
 <li>Director导演类，负责安排已有模块顺序，告诉Builder开始建造。</li>
 </ol>
 <p><em>导演类起到封装的作用，避免高层模块深入到建造者内部的实现类。导演类可以有多个</em></p>
+<h2 id="通用代码"><a href="#通用代码" class="headerlink" title="通用代码"></a>通用代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class Product &#123;</span><br><span class="line">    public void doSomething() &#123;</span><br><span class="line">        //独立业务处理</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public abstract class Builder &#123;</span><br><span class="line">    //设置产品的不同部分，已获得不同产品</span><br><span class="line">    public abstract void setPart();</span><br><span class="line">    //建造产品</span><br><span class="line">    public abstract Product buildProduct();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ConcreteProduct extends Builder &#123;</span><br><span class="line">    private Product product = new Product();</span><br><span class="line">    //设置产品零件</span><br><span class="line">    public void setPart() &#123;</span><br><span class="line">        //产品类内逻辑处理</span><br><span class="line">    &#125;</span><br><span class="line">    //组件一个产品</span><br><span class="line">    public Product buildProduct() &#123;</span><br><span class="line">        return product;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Director &#123;</span><br><span class="line">    private Builder builder new ConcreteProduct();</span><br><span class="line">    //构建不同的产品</span><br><span class="line">    public Product getAProduct() &#123;</span><br><span class="line">        builder.setPart();</span><br><span class="line">        return builder.buildProduct();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
 <li>封装性。使用建造者模式可以使客户端不必知道产品内部组成的细节。</li>
 <li>建造者独立，容易扩展。BenzBuilder和BMWBuilder互相独立，对系统的扩展非常有利</li>
@@ -578,7 +579,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -591,7 +592,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -633,7 +634,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实例"><span class="nav-number">1.</span> <span class="nav-text">代码实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导演类"><span class="nav-number">2.</span> <span class="nav-text">导演类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">3.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个角色"><span class="nav-number">4.</span> <span class="nav-text">四个角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">5.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">6.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">7.</span> <span class="nav-text">注意</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实例"><span class="nav-number">1.</span> <span class="nav-text">代码实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导演类"><span class="nav-number">2.</span> <span class="nav-text">导演类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">3.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个角色"><span class="nav-number">4.</span> <span class="nav-text">四个角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用代码"><span class="nav-number">5.</span> <span class="nav-text">通用代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">6.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">7.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">8.</span> <span class="nav-text">注意</span></a></li></ol></div>
             
 
           </div>
@@ -656,8 +657,8 @@
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -686,7 +687,7 @@
 </div>
 
 <div class="theme-info">
-  <span class="post-count">博客全站共16.5k字</span>
+  <span class="post-count">博客全站共23.8k字</span>
 </div>
         
 

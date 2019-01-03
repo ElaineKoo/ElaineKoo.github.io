@@ -103,18 +103,18 @@
 
 
 
-<meta name="description" content="定义也叫委托模式，为其他对象提供一种代理，以控制对这个对象的访问。使用率非常高。提供非常好的访问控制。 角色 Subject抽象主题角色。可以是抽象类也可以是接口 RealSubject具体主题角色。也称为被委托角色或被代理角色，业务逻辑的具体执行者 Proxy代理主题角色。也称为委托类、代理类  代码123456789101112131415161718192021222324252627282">
+<meta name="description" content="定义也叫委托模式，为其他对象提供一种代理，以控制对这个对象的访问。使用率非常高。提供非常好的访问控制。 角色 Subject抽象主题角色。可以是抽象类也可以是接口 RealSubject具体主题角色。也称为被委托角色或被代理角色，业务逻辑的具体执行者 Proxy代理主题角色。也称为委托类、代理类  通用代码1234567891011121314151617181920212223242526272">
 <meta name="keywords" content="设计模式,代理模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="代理模式">
 <meta property="og:url" content="http://ElaineKoo.github.io/2018/11/13/代理模式/index.html">
 <meta property="og:site_name" content="Koo&#39;s blog">
-<meta property="og:description" content="定义也叫委托模式，为其他对象提供一种代理，以控制对这个对象的访问。使用率非常高。提供非常好的访问控制。 角色 Subject抽象主题角色。可以是抽象类也可以是接口 RealSubject具体主题角色。也称为被委托角色或被代理角色，业务逻辑的具体执行者 Proxy代理主题角色。也称为委托类、代理类  代码123456789101112131415161718192021222324252627282">
+<meta property="og:description" content="定义也叫委托模式，为其他对象提供一种代理，以控制对这个对象的访问。使用率非常高。提供非常好的访问控制。 角色 Subject抽象主题角色。可以是抽象类也可以是接口 RealSubject具体主题角色。也称为被委托角色或被代理角色，业务逻辑的具体执行者 Proxy代理主题角色。也称为委托类、代理类  通用代码1234567891011121314151617181920212223242526272">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-19T04:30:35.972Z">
+<meta property="og:updated_time" content="2018-12-17T06:18:34.702Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代理模式">
-<meta name="twitter:description" content="定义也叫委托模式，为其他对象提供一种代理，以控制对这个对象的访问。使用率非常高。提供非常好的访问控制。 角色 Subject抽象主题角色。可以是抽象类也可以是接口 RealSubject具体主题角色。也称为被委托角色或被代理角色，业务逻辑的具体执行者 Proxy代理主题角色。也称为委托类、代理类  代码123456789101112131415161718192021222324252627282">
+<meta name="twitter:description" content="定义也叫委托模式，为其他对象提供一种代理，以控制对这个对象的访问。使用率非常高。提供非常好的访问控制。 角色 Subject抽象主题角色。可以是抽象类也可以是接口 RealSubject具体主题角色。也称为被委托角色或被代理角色，业务逻辑的具体执行者 Proxy代理主题角色。也称为委托类、代理类  通用代码1234567891011121314151617181920212223242526272">
 
 
 
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  598
+                  643
                 </span>
               
 
@@ -422,17 +422,20 @@
 <li>RealSubject具体主题角色。也称为被委托角色或被代理角色，业务逻辑的具体执行者</li>
 <li>Proxy代理主题角色。也称为委托类、代理类</li>
 </ol>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public interface Subject &#123;</span><br><span class="line">    public void request();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class RealSubject implements Subject &#123;</span><br><span class="line">    public void request() &#123;</span><br><span class="line">        //业务逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Proxy implements Subject &#123;</span><br><span class="line">    private Subject subject = null;</span><br><span class="line">    </span><br><span class="line">    public Proxy() &#123;</span><br><span class="line">        this.subject = new Proxy();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Proxy(Subject subject) &#123;</span><br><span class="line">        this.subject = subject;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void request() &#123;</span><br><span class="line">        this.before();</span><br><span class="line">        this.subject.request();</span><br><span class="line">        this.after();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void before() &#123;&#125;</span><br><span class="line">    public void after() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通用代码"><a href="#通用代码" class="headerlink" title="通用代码"></a>通用代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public interface Subject &#123;</span><br><span class="line">    public void request();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class RealSubject implements Subject &#123;</span><br><span class="line">    public void request() &#123;</span><br><span class="line">        //业务逻辑</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Proxy implements Subject &#123;</span><br><span class="line">    private Subject subject = null;</span><br><span class="line">    </span><br><span class="line">    public Proxy() &#123;</span><br><span class="line">        this.subject = new Proxy();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public Proxy(Subject subject) &#123;</span><br><span class="line">        this.subject = subject;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void request() &#123;</span><br><span class="line">        this.before();</span><br><span class="line">        this.subject.request();</span><br><span class="line">        this.after();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    public void before() &#123;&#125;</span><br><span class="line">    public void after() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
 <li>职责清晰。真实角色就是实现实际的业务逻辑，不用关心其他非本职责的事务，通过后期的代理完成一件事务，附带的结果就是编程简洁清晰</li>
 <li>高扩展性。具体主题角色随时发生变化，不管怎么变化，只要实现了接口，那代理类完全就可以在不做任何修改的情况下使用。</li>
 </ol>
-<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>Spring AOP</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>Spring AOP(代理模式使用到极致)</p>
 <h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><ol>
 <li>普通代理，要求客户端只能访问代理角色，而不能访问真实角色。<br>普通代理模式的约束问题，尽量通过团队内的变成规范类约束，因为每一个主题类是可被重用的和可维护的，实用技术约束的方式对系统维护是一种非常不利的因素</li>
 <li>强制代理，强制必须通过真是角色查找到代理角色，否则不能访问。只有通过真实角色指定的代理类才可以访问，由真是角色管理代理角色。可以不知道代理的存在，但是你的所作所为还是需要代理为你提供。</li>
 <li>代理是有个性的。代理类可以为真实角色预处理消息、过滤消息、消息转发、事后处理消息等功能。可以代理多个真实角色。</li>
 <li>动态代理。动态代理是在实现阶段不用关心代理谁，而在运行阶段才指定代理哪个对象。横切面编程（AOP）核心就是动态代理机制。？？</li>
+</ol>
+<h2 id="与其他模式对比"><a href="#与其他模式对比" class="headerlink" title="与其他模式对比"></a>与其他模式对比</h2><ol>
+<li>与装饰模式比：代理模式在不改变接口的前提下，对过程进行控制</li>
 </ol>
 <p>参考<br>《设计模式之禅》</p>
 
@@ -572,7 +575,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -585,7 +588,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -627,7 +630,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#角色"><span class="nav-number">2.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">4.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">6.</span> <span class="nav-text">扩展</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#角色"><span class="nav-number">2.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用代码"><span class="nav-number">3.</span> <span class="nav-text">通用代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">4.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">6.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与其他模式对比"><span class="nav-number">7.</span> <span class="nav-text">与其他模式对比</span></a></li></ol></div>
             
 
           </div>
@@ -650,8 +653,8 @@
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -680,7 +683,7 @@
 </div>
 
 <div class="theme-info">
-  <span class="post-count">博客全站共16.5k字</span>
+  <span class="post-count">博客全站共23.8k字</span>
 </div>
         
 

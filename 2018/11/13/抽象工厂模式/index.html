@@ -103,18 +103,18 @@
 
 
 
-<meta name="description" content="定义为创建一组相关或相互依赖的对象提供一个接口，并且无需指定他们的具体类抽象工厂模式是工厂方法模式的升级版本，在多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式有N个产品族，在抽象工厂类中就应该有N个创建方法 优点 封装性。每个产品的实现类不是高层模块要关心的，高层模块只关心接口，抽象，不关心对象是如何创建出来的。工厂类负责关心对象是如何创建出来的，产品只要知道工厂类">
+<meta name="description" content="定义为创建一组相关或相互依赖的对象提供一个接口，并且无需指定他们的具体类抽象工厂模式是工厂方法模式的升级版本，在多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式有N个产品族，在抽象工厂类中就应该有N个创建方法">
 <meta name="keywords" content="设计模式,抽象工厂模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="抽象工厂模式">
 <meta property="og:url" content="http://ElaineKoo.github.io/2018/11/13/抽象工厂模式/index.html">
 <meta property="og:site_name" content="Koo&#39;s blog">
-<meta property="og:description" content="定义为创建一组相关或相互依赖的对象提供一个接口，并且无需指定他们的具体类抽象工厂模式是工厂方法模式的升级版本，在多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式有N个产品族，在抽象工厂类中就应该有N个创建方法 优点 封装性。每个产品的实现类不是高层模块要关心的，高层模块只关心接口，抽象，不关心对象是如何创建出来的。工厂类负责关心对象是如何创建出来的，产品只要知道工厂类">
+<meta property="og:description" content="定义为创建一组相关或相互依赖的对象提供一个接口，并且无需指定他们的具体类抽象工厂模式是工厂方法模式的升级版本，在多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式有N个产品族，在抽象工厂类中就应该有N个创建方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-19T04:30:35.960Z">
+<meta property="og:updated_time" content="2018-12-12T03:50:39.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="抽象工厂模式">
-<meta name="twitter:description" content="定义为创建一组相关或相互依赖的对象提供一个接口，并且无需指定他们的具体类抽象工厂模式是工厂方法模式的升级版本，在多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式有N个产品族，在抽象工厂类中就应该有N个创建方法 优点 封装性。每个产品的实现类不是高层模块要关心的，高层模块只关心接口，抽象，不关心对象是如何创建出来的。工厂类负责关心对象是如何创建出来的，产品只要知道工厂类">
+<meta name="twitter:description" content="定义为创建一组相关或相互依赖的对象提供一个接口，并且无需指定他们的具体类抽象工厂模式是工厂方法模式的升级版本，在多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式有N个产品族，在抽象工厂类中就应该有N个创建方法">
 
 
 
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  502
+                  704
                 </span>
               
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -417,6 +417,8 @@
 
       
         <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>为创建一组相关或相互依赖的对象提供一个接口，并且无需指定他们的具体类<br>抽象工厂模式是工厂方法模式的升级版本，在多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式<br>有N个产品族，在抽象工厂类中就应该有N个创建方法</p>
+<a id="more"></a>
+<h2 id="通用代码"><a href="#通用代码" class="headerlink" title="通用代码"></a>通用代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">//抽象产品类</span><br><span class="line">public abstract class AbstractProductA &#123;</span><br><span class="line">    //每个产品的共有方法</span><br><span class="line">    public void sgareMethod()&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //抽象方法,相同方法不同实现</span><br><span class="line">    public abstract void doSomething();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//产品A1类</span><br><span class="line">public class ProductA1 extends AbstractProductA &#123;</span><br><span class="line">    public void doSomething()&#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//产品A2类</span><br><span class="line">public class ProductA2 extends AbstractProductA &#123;</span><br><span class="line">    public void doSomething()&#123;</span><br><span class="line">    </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//抽象工厂类</span><br><span class="line">public abstract class AbstractCreator &#123;</span><br><span class="line">    public abstract AbstractProductA createProductA();</span><br><span class="line">    public abstract AbstractProductB createProductB();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//具体工厂等级1实现类</span><br><span class="line">public class Creator1 extends AbstractCreator &#123;</span><br><span class="line">    public AbstractProductA createProductA() &#123;</span><br><span class="line">        return new ProductA1();</span><br><span class="line">    &#125;    </span><br><span class="line">    public AbstractProductB createProductB() &#123;</span><br><span class="line">        return new ProductB1();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//具体工厂等级2实现类</span><br><span class="line">public class Creator2 extends AbstractCreator &#123;</span><br><span class="line">    public AbstractProductA createProductA() &#123;</span><br><span class="line">        return new ProductA2();</span><br><span class="line">    &#125;    </span><br><span class="line">    public AbstractProductB createProductB() &#123;</span><br><span class="line">        return new ProductB2();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//调用</span><br><span class="line">public class Client &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        AbstractCreator creator1 = new Creator1();</span><br><span class="line">        AbstractCreator creator2 = new Creator2();</span><br><span class="line">        //A1</span><br><span class="line">        AbstractProductA a1 = creator1.createProductA();  </span><br><span class="line">        //A2</span><br><span class="line">        AbstractProductA a2 = creator2.createProductA();        </span><br><span class="line">        //B1</span><br><span class="line">        AbstractProductB b1 = creator1.createProductB();  </span><br><span class="line">        //B2</span><br><span class="line">        AbstractProductB b2 = creator2.createProductB();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
 <li>封装性。每个产品的实现类不是高层模块要关心的，高层模块只关心接口，抽象，不关心对象是如何创建出来的。工厂类负责关心对象是如何创建出来的，产品只要知道工厂类是谁，就能创建出一个需要的对象，省时省力。</li>
 <li>产品族内的约束为非公开状态。</li>
@@ -562,7 +564,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -575,7 +577,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -617,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">3.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">4.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">5.</span> <span class="nav-text">注意</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用代码"><span class="nav-number">2.</span> <span class="nav-text">通用代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">4.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">6.</span> <span class="nav-text">注意</span></a></li></ol></div>
             
 
           </div>
@@ -640,8 +642,8 @@
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -670,7 +672,7 @@
 </div>
 
 <div class="theme-info">
-  <span class="post-count">博客全站共16.5k字</span>
+  <span class="post-count">博客全站共23.8k字</span>
 </div>
         
 

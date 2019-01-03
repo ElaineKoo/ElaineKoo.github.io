@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Koo&#39;s blog">
 <meta property="og:description" content="定义也叫做政策模式，定义一组算法，将每个算法都封装起来，并且使它们之间可以互换。 角色 Context封装角色 上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化 Strategy抽象策略角色 策略算法的抽象，通常为接口，定义每个策略或算法必须具有的方法和属性 ConcreteStrategy具体策略角色 实现抽象策略">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-20T06:12:22.534Z">
+<meta property="og:updated_time" content="2018-12-17T07:42:20.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="策略模式">
 <meta name="twitter:description" content="定义也叫做政策模式，定义一组算法，将每个算法都封装起来，并且使它们之间可以互换。 角色 Context封装角色 上下文角色，起承上启下封装作用，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化 Strategy抽象策略角色 策略算法的抽象，通常为接口，定义每个策略或算法必须具有的方法和属性 ConcreteStrategy具体策略角色 实现抽象策略">
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  477
+                  677
                 </span>
               
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -441,6 +441,11 @@
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>如果一个策略家族的具体策略数量超过4个，则需要考虑使用混合模式，解决策略类膨胀或对外暴露的问题。</p>
 <h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><ol>
 <li>策略枚举</li>
+</ol>
+<h2 id="与其他模式对比"><a href="#与其他模式对比" class="headerlink" title="与其他模式对比"></a>与其他模式对比</h2><ol>
+<li>与命令模式比：策略模式关注是算法替换问题。关注的是算法的完整性、封装性，只有具备了这两个条件才能保证其可以自由切换。具体算法是负责一个完整算法逻辑，它是不可再拆分的原子业务单元，一旦变更就是对算法整体的变更。</li>
+<li>与状态模式比：策略模式封装的是不同的算法，算法之间没有交互。策略模式的环境角色只是一个委托作用，负责算法的替换。</li>
+<li>与桥梁模式比：策略模式是行为模式，旨在封装一系列行为。使用继承和多态建立一套可以自由切换算法的模式。</li>
 </ol>
 <p>参考<br>《设计模式之禅》</p>
 
@@ -580,7 +585,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -593,7 +598,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -635,7 +640,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#角色"><span class="nav-number">2.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用源码"><span class="nav-number">3.</span> <span class="nav-text">通用源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">4.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">5.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">6.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">7.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">8.</span> <span class="nav-text">扩展</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#角色"><span class="nav-number">2.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通用源码"><span class="nav-number">3.</span> <span class="nav-text">通用源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">4.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缺点"><span class="nav-number">5.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">6.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">7.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">8.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与其他模式对比"><span class="nav-number">9.</span> <span class="nav-text">与其他模式对比</span></a></li></ol></div>
             
 
           </div>
@@ -658,8 +663,8 @@
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -688,7 +693,7 @@
 </div>
 
 <div class="theme-info">
-  <span class="post-count">博客全站共16.5k字</span>
+  <span class="post-count">博客全站共23.8k字</span>
 </div>
         
 

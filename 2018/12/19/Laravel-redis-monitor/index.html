@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="laravel,redis,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Koo's blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/eb8cc690f16448569418452c0ae42be6.jpeg?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="使用redis monitor观察以下为laradock环境下的redis12$ docker-compose exec redis redis-cli127.0.0.1:6379&amp;gt;monitor 队列中无任务，启动队列：php artisan queue:work1234567891011121314151617181920查看是否需要重启，如果 my_laravel_project_ca">
+<meta name="keywords" content="laravel,redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laravel redis monitor">
+<meta property="og:url" content="http://ElaineKoo.github.io/2018/12/19/Laravel-redis-monitor/index.html">
+<meta property="og:site_name" content="Koo&#39;s blog">
+<meta property="og:description" content="使用redis monitor观察以下为laradock环境下的redis12$ docker-compose exec redis redis-cli127.0.0.1:6379&amp;gt;monitor 队列中无任务，启动队列：php artisan queue:work1234567891011121314151617181920查看是否需要重启，如果 my_laravel_project_ca">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-20T02:00:51.405Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Laravel redis monitor">
+<meta name="twitter:description" content="使用redis monitor观察以下为laradock环境下的redis12$ docker-compose exec redis redis-cli127.0.0.1:6379&amp;gt;monitor 队列中无任务，启动队列：php artisan queue:work1234567891011121314151617181920查看是否需要重启，如果 my_laravel_project_ca">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ElaineKoo.github.io/2018/12/19/Laravel-redis-monitor/">
+
+
+
+
+
+  <title>Laravel redis monitor | Koo's blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Koo's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ElaineKoo.github.io/2018/12/19/Laravel-redis-monitor/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Koo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/f7246b600c3387449a71cb4a590fd9f9d72aa054.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Koo's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Laravel redis monitor</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-19T13:54:32+08:00">
+                2018-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/19/Laravel-redis-monitor/" class="leancloud_visitors" data-flag-title="Laravel redis monitor">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  4.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  23
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="使用redis-monitor观察"><a href="#使用redis-monitor观察" class="headerlink" title="使用redis monitor观察"></a>使用redis monitor观察</h2><p><em>以下为laradock环境下的redis</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose exec redis redis-cli</span><br><span class="line">127.0.0.1:6379&gt;monitor</span><br></pre></td></tr></table></figure></p>
+<h3 id="队列中无任务，启动队列：php-artisan-queue-work"><a href="#队列中无任务，启动队列：php-artisan-queue-work" class="headerlink" title="队列中无任务，启动队列：php artisan queue:work"></a>队列中无任务，启动队列：php artisan queue:work</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">查看是否需要重启，如果 my_laravel_project_cache:illuminate:queue:restart 存在，就重启队列（代码更新后，一定要重启队列，否则队列不会读取最新代码）。</span><br><span class="line">xxxxxxxxxx.xxxxxx [0 172.21.0.5:40858] &quot;GET&quot; &quot;my_laravel_project_cache:illuminate:queue:restart&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:40860] &quot;EVAL&quot; &quot;-- Get all of the jobs with an expired \&quot;score\&quot;...\nlocal val = redis.call(&apos;zrangebyscore&apos;, KEYS[1], &apos;-inf&apos;, ARGV[1])\n\n-- If we have values in the array, we will remove them from the first queue\n-- and add them onto the destination queue in chunks of 100, which moves\n-- all of the appropriate jobs onto the destination queue very safely.\nif(next(val) ~= nil) then\n    redis.call(&apos;zremrangebyrank&apos;, KEYS[1], 0, #val - 1)\n\n    for i = 1, #val, 100 do\n        redis.call(&apos;rpush&apos;, KEYS[2], unpack(val, i, math.min(i+99, #val)))\n    end\nend\n\nreturn val&quot; &quot;2&quot; &quot;queues:default:delayed&quot; &quot;queues:default&quot; &quot;1543320121&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，延迟任务队列中，按score排序找score小于等于现在的所有任务，score是执行时间</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zrangebyscore&quot; &quot;queues:default:delayed&quot; &quot;-inf&quot; &quot;1543320121&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:40860] &quot;EVAL&quot; &quot;-- Get all of the jobs with an expired \&quot;score\&quot;...\nlocal val = redis.call(&apos;zrangebyscore&apos;, KEYS[1], &apos;-inf&apos;, ARGV[1])\n\n-- If we have values in the array, we will remove them from the first queue\n-- and add them onto the destination queue in chunks of 100, which moves\n-- all of the appropriate jobs onto the destination queue very safely.\nif(next(val) ~= nil) then\n    redis.call(&apos;zremrangebyrank&apos;, KEYS[1], 0, #val - 1)\n\n    for i = 1, #val, 100 do\n        redis.call(&apos;rpush&apos;, KEYS[2], unpack(val, i, math.min(i+99, #val)))\n    end\nend\n\nreturn val&quot; &quot;2&quot; &quot;queues:default:reserved&quot; &quot;queues:default&quot; &quot;1543320121&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，待处理任务队列中，按score排序找score小于等于现在的所有任务，score是执行时间</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zrangebyscore&quot; &quot;queues:default:reserved&quot; &quot;-inf&quot; &quot;1543320121&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:40860] &quot;EVAL&quot; &quot;-- Pop the first job off of the queue...\nlocal job = redis.call(&apos;lpop&apos;, KEYS[1])\nlocal reserved = false\n\nif(job ~= false) then\n    -- Increment the attempt count and place job on the reserved queue...\n    reserved = cjson.decode(job)\n    reserved[&apos;attempts&apos;] = reserved[&apos;attempts&apos;] + 1\n    reserved = cjson.encode(reserved)\n    redis.call(&apos;zadd&apos;, KEYS[2], ARGV[1], reserved)\nend\n\nreturn &#123;job, reserved&#125;&quot; &quot;2&quot; &quot;queues:default&quot; &quot;queues:default:reserved&quot; &quot;1543320211&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，从默认队列中删除job</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;lpop&quot; &quot;queues:default&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="及时任务"><a href="#及时任务" class="headerlink" title="及时任务"></a>及时任务</h3><h4 id="操作1-放一个及时任务到消息队列"><a href="#操作1-放一个及时任务到消息队列" class="headerlink" title="操作1: 放一个及时任务到消息队列"></a>操作1: 放一个及时任务到消息队列</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">选择1号redis库</span><br><span class="line">xxxxxxxxxx.xxxxxx [0 172.21.0.6:56918] &quot;SELECT&quot; &quot;1&quot;</span><br><span class="line"></span><br><span class="line">将任务放入默认队列</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.6:56918] &quot;RPUSH&quot; &quot;queues:default&quot; &quot;&#123;\&quot;displayName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;,\&quot;job\&quot;:\&quot;Illuminate\\\\Queue\\\\CallQueuedHandler@call\&quot;,\&quot;maxTries\&quot;:4,\&quot;timeout\&quot;:5000,\&quot;timeoutAt\&quot;:null,\&quot;data\&quot;:&#123;\&quot;commandName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;,\&quot;command\&quot;:\&quot;O:40:\\\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\\\&quot;:11:&#123;s:7:\\\&quot;timeout\\\&quot;;i:5000;s:5:\\\&quot;tries\\\&quot;;i:4;s:11:\\\&quot;\\u0000*\\u0000advisory\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:19:\\\&quot;App\\\\Models\\\\Advisory\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:4;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:17:\\\&quot;\\u0000*\\u0000advisoryRecord\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:25:\\\&quot;App\\\\Models\\\\AdvisoryRecord\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:145;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:6:\\\&quot;\\u0000*\\u0000job\\\&quot;;N;s:10:\\\&quot;connection\\\&quot;;N;s:5:\\\&quot;queue\\\&quot;;N;s:15:\\\&quot;chainConnection\\\&quot;;N;s:10:\\\&quot;chainQueue\\\&quot;;N;s:5:\\\&quot;delay\\\&quot;;N;s:7:\\\&quot;chained\\\&quot;;a:0:&#123;&#125;&#125;\&quot;&#125;,\&quot;id\&quot;:\&quot;aP4LzhyYgB3aKaiCTJRJjlqhVtrqDhOC\&quot;,\&quot;attempts\&quot;:0&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="操作2-启动队列：php-artisan-queue-work"><a href="#操作2-启动队列：php-artisan-queue-work" class="headerlink" title="操作2: 启动队列：php artisan queue:work"></a>操作2: 启动队列：php artisan queue:work</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">查看是否需要重启，如果 my_laravel_project_cache:illuminate:queue:restart 存在，就重启队列。</span><br><span class="line">xxxxxxxxxx.xxxxxx [0 172.21.0.5:40858] &quot;GET&quot; &quot;my_laravel_project_cache:illuminate:queue:restart&quot;</span><br><span class="line"></span><br><span class="line">选择1号redis库</span><br><span class="line">xxxxxxxxxx.xxxxxx [0 172.21.0.5:40860] &quot;SELECT&quot; &quot;1&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:40860] &quot;EVAL&quot; &quot;-- Get all of the jobs with an expired \&quot;score\&quot;...\nlocal val = redis.call(&apos;zrangebyscore&apos;, KEYS[1], &apos;-inf&apos;, ARGV[1])\n\n-- If we have values in the array, we will remove them from the first queue\n-- and add them onto the destination queue in chunks of 100, which moves\n-- all of the appropriate jobs onto the destination queue very safely.\nif(next(val) ~= nil) then\n    redis.call(&apos;zremrangebyrank&apos;, KEYS[1], 0, #val - 1)\n\n    for i = 1, #val, 100 do\n        redis.call(&apos;rpush&apos;, KEYS[2], unpack(val, i, math.min(i+99, #val)))\n    end\nend\n\nreturn val&quot; &quot;2&quot; &quot;queues:default:delayed&quot; &quot;queues:default&quot; &quot;1543320117&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，延迟任务队列中，按score排序找score小于等于现在的所有任务，score是执行时间</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zrangebyscore&quot; &quot;queues:default:delayed&quot; &quot;-inf&quot; &quot;1543320117&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:40860] &quot;EVAL&quot; &quot;-- Get all of the jobs with an expired \&quot;score\&quot;...\nlocal val = redis.call(&apos;zrangebyscore&apos;, KEYS[1], &apos;-inf&apos;, ARGV[1])\n\n-- If we have values in the array, we will remove them from the first queue\n-- and add them onto the destination queue in chunks of 100, which moves\n-- all of the appropriate jobs onto the destination queue very safely.\nif(next(val) ~= nil) then\n    redis.call(&apos;zremrangebyrank&apos;, KEYS[1], 0, #val - 1)\n\n    for i = 1, #val, 100 do\n        redis.call(&apos;rpush&apos;, KEYS[2], unpack(val, i, math.min(i+99, #val)))\n    end\nend\n\nreturn val&quot; &quot;2&quot; &quot;queues:default:reserved&quot; &quot;queues:default&quot; &quot;1543320117&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，待处理任务队列中，按score排序找score小于等于现在的所有任务，score是执行时间</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zrangebyscore&quot; &quot;queues:default:reserved&quot; &quot;-inf&quot; &quot;1543320117&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:40860] &quot;EVAL&quot; &quot;-- Pop the first job off of the queue...\nlocal job = redis.call(&apos;lpop&apos;, KEYS[1])\nlocal reserved = false\n\nif(job ~= false) then\n    -- Increment the attempt count and place job on the reserved queue...\n    reserved = cjson.decode(job)\n    reserved[&apos;attempts&apos;] = reserved[&apos;attempts&apos;] + 1\n    reserved = cjson.encode(reserved)\n    redis.call(&apos;zadd&apos;, KEYS[2], ARGV[1], reserved)\nend\n\nreturn &#123;job, reserved&#125;&quot; &quot;2&quot; &quot;queues:default&quot; &quot;queues:default:reserved&quot; &quot;1543320207&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，从默认队列中删除job</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;lpop&quot; &quot;queues:default&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，把job加入待处理任务队列中</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zadd&quot; &quot;queues:default:reserved&quot; &quot;1543320207&quot; &quot;&#123;\&quot;maxTries\&quot;:4,\&quot;attempts\&quot;:1,\&quot;timeout\&quot;:5000,\&quot;job\&quot;:\&quot;Illuminate\\\\Queue\\\\CallQueuedHandler@call\&quot;,\&quot;id\&quot;:\&quot;aP4LzhyYgB3aKaiCTJRJjlqhVtrqDhOC\&quot;,\&quot;timeoutAt\&quot;:null,\&quot;data\&quot;:&#123;\&quot;command\&quot;:\&quot;O:40:\\\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\\\&quot;:11:&#123;s:7:\\\&quot;timeout\\\&quot;;i:5000;s:5:\\\&quot;tries\\\&quot;;i:4;s:11:\\\&quot;\\u0000*\\u0000advisory\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:19:\\\&quot;App\\\\Models\\\\Advisory\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:4;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:17:\\\&quot;\\u0000*\\u0000advisoryRecord\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:25:\\\&quot;App\\\\Models\\\\AdvisoryRecord\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:145;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:6:\\\&quot;\\u0000*\\u0000job\\\&quot;;N;s:10:\\\&quot;connection\\\&quot;;N;s:5:\\\&quot;queue\\\&quot;;N;s:15:\\\&quot;chainConnection\\\&quot;;N;s:10:\\\&quot;chainQueue\\\&quot;;N;s:5:\\\&quot;delay\\\&quot;;N;s:7:\\\&quot;chained\\\&quot;;a:0:&#123;&#125;&#125;\&quot;,\&quot;commandName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;&#125;,\&quot;displayName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;&#125;&quot;</span><br><span class="line"></span><br><span class="line">任务执行成功，将job从default:reserved中删除</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:40860] &quot;ZREM&quot; &quot;queues:default:reserved&quot; &quot;&#123;\&quot;maxTries\&quot;:4,\&quot;attempts\&quot;:1,\&quot;timeout\&quot;:5000,\&quot;job\&quot;:\&quot;Illuminate\\\\Queue\\\\CallQueuedHandler@call\&quot;,\&quot;id\&quot;:\&quot;aP4LzhyYgB3aKaiCTJRJjlqhVtrqDhOC\&quot;,\&quot;timeoutAt\&quot;:null,\&quot;data\&quot;:&#123;\&quot;command\&quot;:\&quot;O:40:\\\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\\\&quot;:11:&#123;s:7:\\\&quot;timeout\\\&quot;;i:5000;s:5:\\\&quot;tries\\\&quot;;i:4;s:11:\\\&quot;\\u0000*\\u0000advisory\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:19:\\\&quot;App\\\\Models\\\\Advisory\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:4;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:17:\\\&quot;\\u0000*\\u0000advisoryRecord\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:25:\\\&quot;App\\\\Models\\\\AdvisoryRecord\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:145;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:6:\\\&quot;\\u0000*\\u0000job\\\&quot;;N;s:10:\\\&quot;connection\\\&quot;;N;s:5:\\\&quot;queue\\\&quot;;N;s:15:\\\&quot;chainConnection\\\&quot;;N;s:10:\\\&quot;chainQueue\\\&quot;;N;s:5:\\\&quot;delay\\\&quot;;N;s:7:\\\&quot;chained\\\&quot;;a:0:&#123;&#125;&#125;\&quot;,\&quot;commandName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;&#125;,\&quot;displayName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="延迟任务"><a href="#延迟任务" class="headerlink" title="延迟任务"></a>延迟任务</h3><h4 id="操作1-放一个延迟任务到消息队列"><a href="#操作1-放一个延迟任务到消息队列" class="headerlink" title="操作1: 放一个延迟任务到消息队列"></a>操作1: 放一个延迟任务到消息队列</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">选择1号redis库</span><br><span class="line">xxxxxxxxxx.xxxxxx [0 172.21.0.6:57034] &quot;SELECT&quot; &quot;1&quot;</span><br><span class="line"></span><br><span class="line">将job放进延迟队列中</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.6:57034] &quot;zadd&quot; &quot;queues:default:delayed&quot; &quot;1543321166&quot; &quot;&#123;\&quot;displayName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;,\&quot;job\&quot;:\&quot;Illuminate\\\\Queue\\\\CallQueuedHandler@call\&quot;,\&quot;maxTries\&quot;:4,\&quot;timeout\&quot;:5000,\&quot;timeoutAt\&quot;:null,\&quot;data\&quot;:&#123;\&quot;commandName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;,\&quot;command\&quot;:\&quot;O:40:\\\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\\\&quot;:11:&#123;s:7:\\\&quot;timeout\\\&quot;;i:5000;s:5:\\\&quot;tries\\\&quot;;i:4;s:11:\\\&quot;\\u0000*\\u0000advisory\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:19:\\\&quot;App\\\\Models\\\\Advisory\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:4;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:17:\\\&quot;\\u0000*\\u0000advisoryRecord\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:25:\\\&quot;App\\\\Models\\\\AdvisoryRecord\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:146;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:6:\\\&quot;\\u0000*\\u0000job\\\&quot;;N;s:10:\\\&quot;connection\\\&quot;;N;s:5:\\\&quot;queue\\\&quot;;N;s:15:\\\&quot;chainConnection\\\&quot;;N;s:10:\\\&quot;chainQueue\\\&quot;;N;s:5:\\\&quot;delay\\\&quot;;O:13:\\\&quot;Carbon\\\\Carbon\\\&quot;:3:&#123;s:4:\\\&quot;date\\\&quot;;s:26:\\\&quot;2018-11-27 20:19:26.033615\\\&quot;;s:13:\\\&quot;timezone_type\\\&quot;;i:3;s:8:\\\&quot;timezone\\\&quot;;s:3:\\\&quot;PRC\\\&quot;;&#125;s:7:\\\&quot;chained\\\&quot;;a:0:&#123;&#125;&#125;\&quot;&#125;,\&quot;id\&quot;:\&quot;JGqshVc6ub4iQH3CeZFFyGjcxTmmPNvh\&quot;,\&quot;attempts\&quot;:0&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h5 id="对应代码"><a href="#对应代码" class="headerlink" title="对应代码"></a>对应代码</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">namespace Illuminate\Queue;</span><br><span class="line"></span><br><span class="line">class RedisQueue extends Queue implements QueueContract</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     * Push a raw job onto the queue after a delay.</span><br><span class="line">     *</span><br><span class="line">     * @param  \DateTimeInterface|\DateInterval|int  $delay</span><br><span class="line">     * @param  string  $payload</span><br><span class="line">     * @param  string  $queue</span><br><span class="line">     * @return mixed</span><br><span class="line">     */</span><br><span class="line">    protected function laterRaw($delay, $payload, $queue = null)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;getConnection()-&gt;zadd(</span><br><span class="line">            $this-&gt;getQueue($queue).&apos;:delayed&apos;, $this-&gt;availableAt($delay), $payload</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        return json_decode($payload, true)[&apos;id&apos;] ?? null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="操作2-启动队列：php-artisan-queue-work，并执行延迟任务"><a href="#操作2-启动队列：php-artisan-queue-work，并执行延迟任务" class="headerlink" title="操作2: 启动队列：php artisan queue:work，并执行延迟任务"></a>操作2: 启动队列：php artisan queue:work，并执行延迟任务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">查看是否需要重启，如果 my_laravel_project_cache:illuminate:queue:restart 存在，就重启队列。</span><br><span class="line">xxxxxxxxxx.xxxxxx [0 172.21.0.5:41020] &quot;GET&quot; &quot;my_laravel_project_cache:illuminate:queue:restart&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:41022] &quot;EVAL&quot; &quot;-- Get all of the jobs with an expired \&quot;score\&quot;...\nlocal val = redis.call(&apos;zrangebyscore&apos;, KEYS[1], &apos;-inf&apos;, ARGV[1])\n\n-- If we have values in the array, we will remove them from the first queue\n-- and add them onto the destination queue in chunks of 100, which moves\n-- all of the appropriate jobs onto the destination queue very safely.\nif(next(val) ~= nil) then\n    redis.call(&apos;zremrangebyrank&apos;, KEYS[1], 0, #val - 1)\n\n    for i = 1, #val, 100 do\n        redis.call(&apos;rpush&apos;, KEYS[2], unpack(val, i, math.min(i+99, #val)))\n    end\nend\n\nreturn val&quot; &quot;2&quot; &quot;queues:default:delayed&quot; &quot;queues:default&quot; &quot;1543320729&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，延迟任务队列中，按score排序找score小于等于现在的所有任务，score是执行时间</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zrangebyscore&quot; &quot;queues:default:delayed&quot; &quot;-inf&quot; &quot;1543320729&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，移除延迟任务队列中，下标为0的任务（说明只找到一个）</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zremrangebyrank&quot; &quot;queues:default:delayed&quot; &quot;0&quot; &quot;0&quot;</span><br><span class="line"></span><br><span class="line">将任务放入默认队列</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;rpush&quot; &quot;queues:default&quot; &quot;&#123;\&quot;displayName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;,\&quot;job\&quot;:\&quot;Illuminate\\\\Queue\\\\CallQueuedHandler@call\&quot;,\&quot;maxTries\&quot;:4,\&quot;timeout\&quot;:5000,\&quot;timeoutAt\&quot;:null,\&quot;data\&quot;:&#123;\&quot;commandName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;,\&quot;command\&quot;:\&quot;O:40:\\\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\\\&quot;:11:&#123;s:7:\\\&quot;timeout\\\&quot;;i:5000;s:5:\\\&quot;tries\\\&quot;;i:4;s:11:\\\&quot;\\u0000*\\u0000advisory\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:19:\\\&quot;App\\\\Models\\\\Advisory\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:4;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:17:\\\&quot;\\u0000*\\u0000advisoryRecord\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:25:\\\&quot;App\\\\Models\\\\AdvisoryRecord\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:147;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:6:\\\&quot;\\u0000*\\u0000job\\\&quot;;N;s:10:\\\&quot;connection\\\&quot;;N;s:5:\\\&quot;queue\\\&quot;;N;s:15:\\\&quot;chainConnection\\\&quot;;N;s:10:\\\&quot;chainQueue\\\&quot;;N;s:5:\\\&quot;delay\\\&quot;;O:13:\\\&quot;Carbon\\\\Carbon\\\&quot;:3:&#123;s:4:\\\&quot;date\\\&quot;;s:26:\\\&quot;2018-11-27 20:12:07.408913\\\&quot;;s:13:\\\&quot;timezone_type\\\&quot;;i:3;s:8:\\\&quot;timezone\\\&quot;;s:3:\\\&quot;PRC\\\&quot;;&#125;s:7:\\\&quot;chained\\\&quot;;a:0:&#123;&#125;&#125;\&quot;&#125;,\&quot;id\&quot;:\&quot;brP2ZEbWU7e5CwXAURQ1fxkk1h9VHuKj\&quot;,\&quot;attempts\&quot;:0&#125;&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:41022] &quot;EVAL&quot; &quot;-- Get all of the jobs with an expired \&quot;score\&quot;...\nlocal val = redis.call(&apos;zrangebyscore&apos;, KEYS[1], &apos;-inf&apos;, ARGV[1])\n\n-- If we have values in the array, we will remove them from the first queue\n-- and add them onto the destination queue in chunks of 100, which moves\n-- all of the appropriate jobs onto the destination queue very safely.\nif(next(val) ~= nil) then\n    redis.call(&apos;zremrangebyrank&apos;, KEYS[1], 0, #val - 1)\n\n    for i = 1, #val, 100 do\n        redis.call(&apos;rpush&apos;, KEYS[2], unpack(val, i, math.min(i+99, #val)))\n    end\nend\n\nreturn val&quot; &quot;2&quot; &quot;queues:default:reserved&quot; &quot;queues:default&quot; &quot;1543320729&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，待处理任务队列中，按score排序找score小于等于现在的所有任务，score是执行时间</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zrangebyscore&quot; &quot;queues:default:reserved&quot; &quot;-inf&quot; &quot;1543320729&quot;</span><br><span class="line"></span><br><span class="line">使用 Lua 解释器执行脚本</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:41022] &quot;EVAL&quot; &quot;-- Pop the first job off of the queue...\nlocal job = redis.call(&apos;lpop&apos;, KEYS[1])\nlocal reserved = false\n\nif(job ~= false) then\n    -- Increment the attempt count and place job on the reserved queue...\n    reserved = cjson.decode(job)\n    reserved[&apos;attempts&apos;] = reserved[&apos;attempts&apos;] + 1\n    reserved = cjson.encode(reserved)\n    redis.call(&apos;zadd&apos;, KEYS[2], ARGV[1], reserved)\nend\n\nreturn &#123;job, reserved&#125;&quot; &quot;2&quot; &quot;queues:default&quot; &quot;queues:default:reserved&quot; &quot;1543320819&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，从默认队列中删除job</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;lpop&quot; &quot;queues:default&quot;</span><br><span class="line"></span><br><span class="line">Lua 解释器执行脚本，把job加入待处理任务队列中</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 lua] &quot;zadd&quot; &quot;queues:default:reserved&quot; &quot;1543320819&quot; &quot;&#123;\&quot;maxTries\&quot;:4,\&quot;attempts\&quot;:1,\&quot;timeout\&quot;:5000,\&quot;job\&quot;:\&quot;Illuminate\\\\Queue\\\\CallQueuedHandler@call\&quot;,\&quot;id\&quot;:\&quot;brP2ZEbWU7e5CwXAURQ1fxkk1h9VHuKj\&quot;,\&quot;timeoutAt\&quot;:null,\&quot;data\&quot;:&#123;\&quot;command\&quot;:\&quot;O:40:\\\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\\\&quot;:11:&#123;s:7:\\\&quot;timeout\\\&quot;;i:5000;s:5:\\\&quot;tries\\\&quot;;i:4;s:11:\\\&quot;\\u0000*\\u0000advisory\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:19:\\\&quot;App\\\\Models\\\\Advisory\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:4;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:17:\\\&quot;\\u0000*\\u0000advisoryRecord\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:25:\\\&quot;App\\\\Models\\\\AdvisoryRecord\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:147;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:6:\\\&quot;\\u0000*\\u0000job\\\&quot;;N;s:10:\\\&quot;connection\\\&quot;;N;s:5:\\\&quot;queue\\\&quot;;N;s:15:\\\&quot;chainConnection\\\&quot;;N;s:10:\\\&quot;chainQueue\\\&quot;;N;s:5:\\\&quot;delay\\\&quot;;O:13:\\\&quot;Carbon\\\\Carbon\\\&quot;:3:&#123;s:4:\\\&quot;date\\\&quot;;s:26:\\\&quot;2018-11-27 20:12:07.408913\\\&quot;;s:13:\\\&quot;timezone_type\\\&quot;;i:3;s:8:\\\&quot;timezone\\\&quot;;s:3:\\\&quot;PRC\\\&quot;;&#125;s:7:\\\&quot;chained\\\&quot;;a:0:&#123;&#125;&#125;\&quot;,\&quot;commandName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;&#125;,\&quot;displayName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;&#125;&quot;</span><br><span class="line"></span><br><span class="line">任务执行成功，将job从default:reserved中删除</span><br><span class="line">xxxxxxxxxx.xxxxxx [1 172.21.0.5:41022] &quot;ZREM&quot; &quot;queues:default:reserved&quot; &quot;&#123;\&quot;maxTries\&quot;:4,\&quot;attempts\&quot;:1,\&quot;timeout\&quot;:5000,\&quot;job\&quot;:\&quot;Illuminate\\\\Queue\\\\CallQueuedHandler@call\&quot;,\&quot;id\&quot;:\&quot;brP2ZEbWU7e5CwXAURQ1fxkk1h9VHuKj\&quot;,\&quot;timeoutAt\&quot;:null,\&quot;data\&quot;:&#123;\&quot;command\&quot;:\&quot;O:40:\\\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\\\&quot;:11:&#123;s:7:\\\&quot;timeout\\\&quot;;i:5000;s:5:\\\&quot;tries\\\&quot;;i:4;s:11:\\\&quot;\\u0000*\\u0000advisory\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:19:\\\&quot;App\\\\Models\\\\Advisory\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:4;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:17:\\\&quot;\\u0000*\\u0000advisoryRecord\\\&quot;;O:45:\\\&quot;Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\&quot;:3:&#123;s:5:\\\&quot;class\\\&quot;;s:25:\\\&quot;App\\\\Models\\\\AdvisoryRecord\\\&quot;;s:2:\\\&quot;id\\\&quot;;i:147;s:10:\\\&quot;connection\\\&quot;;s:5:\\\&quot;mysql\\\&quot;;&#125;s:6:\\\&quot;\\u0000*\\u0000job\\\&quot;;N;s:10:\\\&quot;connection\\\&quot;;N;s:5:\\\&quot;queue\\\&quot;;N;s:15:\\\&quot;chainConnection\\\&quot;;N;s:10:\\\&quot;chainQueue\\\&quot;;N;s:5:\\\&quot;delay\\\&quot;;O:13:\\\&quot;Carbon\\\\Carbon\\\&quot;:3:&#123;s:4:\\\&quot;date\\\&quot;;s:26:\\\&quot;2018-11-27 20:12:07.408913\\\&quot;;s:13:\\\&quot;timezone_type\\\&quot;;i:3;s:8:\\\&quot;timezone\\\&quot;;s:3:\\\&quot;PRC\\\&quot;;&#125;s:7:\\\&quot;chained\\\&quot;;a:0:&#123;&#125;&#125;\&quot;,\&quot;commandName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;&#125;,\&quot;displayName\&quot;:\&quot;App\\\\Jobs\\\\Advisory\\\\AdvisoryReplyNoticeJob\&quot;&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="三个队列"><a href="#三个队列" class="headerlink" title="三个队列"></a>三个队列</h3><blockquote>
+<p>queue:default:delayed : 存储延迟任务<br>queue:default : 存储待处理任务，应该处理但是还未处理任务<br>queue:default:reserved : 存储待处理任务</p>
+</blockquote>
+<p>参考<br><a href="https://www.cnblogs.com/yjf512/p/6571941.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="noopener">https://www.cnblogs.com/yjf512/p/6571941.html?utm_source=tuicool&amp;utm_medium=referral</a><br><a href="https://laravel-china.org/articles/3729/use-laravel-queue-to-understand-the-knowledge#1e3690" target="_blank" rel="noopener">https://laravel-china.org/articles/3729/use-laravel-queue-to-understand-the-knowledge#1e3690</a><br><a href="https://www.codercto.com/a/20858.html" target="_blank" rel="noopener">https://www.codercto.com/a/20858.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Koo
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://ElaineKoo.github.io/2018/12/19/Laravel-redis-monitor/" title="Laravel redis monitor">http://ElaineKoo.github.io/2018/12/19/Laravel-redis-monitor/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/laravel/" rel="tag"><i class="fa fa-tag"></i> laravel</a>
+          
+            <a href="/tags/redis/" rel="tag"><i class="fa fa-tag"></i> redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/14/Mysql-explain用法及含义/" rel="next" title="Mysql explain用法及含义">
+                <i class="fa fa-chevron-left"></i> Mysql explain用法及含义
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/f7246b600c3387449a71cb4a590fd9f9d72aa054.jpg" alt="Koo">
+          <p class="site-author-name" itemprop="name">Koo</p>
+           
+              <p class="site-description motion-element" itemprop="description">学习记录，每天进步一点点</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用redis-monitor观察"><span class="nav-number">1.</span> <span class="nav-text">使用redis monitor观察</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列中无任务，启动队列：php-artisan-queue-work"><span class="nav-number">1.1.</span> <span class="nav-text">队列中无任务，启动队列：php artisan queue:work</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#及时任务"><span class="nav-number">1.2.</span> <span class="nav-text">及时任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#操作1-放一个及时任务到消息队列"><span class="nav-number">1.2.1.</span> <span class="nav-text">操作1: 放一个及时任务到消息队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作2-启动队列：php-artisan-queue-work"><span class="nav-number">1.2.2.</span> <span class="nav-text">操作2: 启动队列：php artisan queue:work</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延迟任务"><span class="nav-number">1.3.</span> <span class="nav-text">延迟任务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#操作1-放一个延迟任务到消息队列"><span class="nav-number">1.3.1.</span> <span class="nav-text">操作1: 放一个延迟任务到消息队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#对应代码"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">对应代码</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作2-启动队列：php-artisan-queue-work，并执行延迟任务"><span class="nav-number">1.3.2.</span> <span class="nav-text">操作2: 启动队列：php artisan queue:work，并执行延迟任务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三个队列"><span class="nav-number">2.1.</span> <span class="nav-text">三个队列</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">
+  
+  &copy;  2018 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Koo</span>
+</div>
+
+<!--
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+-->
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数: <span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<div class="theme-info">
+  <span class="post-count">博客全站共23.8k字</span>
+</div>
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("UGIQKoug5WPMNdmE3BJmGB4r-gzGzoHsz", "w2ccB8DfhvV2pvbk6WTYTMUP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
