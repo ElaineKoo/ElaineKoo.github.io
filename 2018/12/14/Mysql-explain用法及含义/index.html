@@ -103,18 +103,18 @@
 
 
 
-<meta name="description" content="EXPLAIN只能解释SELECT操作，其他操作要重写为SELECT后查看执行计划 EXPLAIN列的解释：idSELECT识别符。这是SELECT的查询序列号，每一个select都会分配一个id select_typeSELECT类型 table输出的行所引用的表 type从最佳类型到最坏类型进行排序 特殊：NULLmysql能够在优化阶段分解查询语句，在执行阶段用不着再访问表或索引123456">
+<meta name="description" content="EXPLAIN只能解释SELECT操作，其他操作要重写为SELECT后查看执行计划 EXPLAIN列的解释：idSELECT识别符。这是SELECT的查询序列号，每一个select都会分配一个id select_typeSELECT类型 table输出的行所引用的表 type从最佳类型到最坏类型进行排序">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql explain用法及含义">
 <meta property="og:url" content="http://ElaineKoo.github.io/2018/12/14/Mysql-explain用法及含义/index.html">
 <meta property="og:site_name" content="Koo&#39;s blog">
-<meta property="og:description" content="EXPLAIN只能解释SELECT操作，其他操作要重写为SELECT后查看执行计划 EXPLAIN列的解释：idSELECT识别符。这是SELECT的查询序列号，每一个select都会分配一个id select_typeSELECT类型 table输出的行所引用的表 type从最佳类型到最坏类型进行排序 特殊：NULLmysql能够在优化阶段分解查询语句，在执行阶段用不着再访问表或索引123456">
+<meta property="og:description" content="EXPLAIN只能解释SELECT操作，其他操作要重写为SELECT后查看执行计划 EXPLAIN列的解释：idSELECT识别符。这是SELECT的查询序列号，每一个select都会分配一个id select_typeSELECT类型 table输出的行所引用的表 type从最佳类型到最坏类型进行排序">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-17T02:07:12.811Z">
+<meta property="og:updated_time" content="2019-09-29T13:31:10.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql explain用法及含义">
-<meta name="twitter:description" content="EXPLAIN只能解释SELECT操作，其他操作要重写为SELECT后查看执行计划 EXPLAIN列的解释：idSELECT识别符。这是SELECT的查询序列号，每一个select都会分配一个id select_typeSELECT类型 table输出的行所引用的表 type从最佳类型到最坏类型进行排序 特殊：NULLmysql能够在优化阶段分解查询语句，在执行阶段用不着再访问表或索引123456">
+<meta name="twitter:description" content="EXPLAIN只能解释SELECT操作，其他操作要重写为SELECT后查看执行计划 EXPLAIN列的解释：idSELECT识别符。这是SELECT的查询序列号，每一个select都会分配一个id select_typeSELECT类型 table输出的行所引用的表 type从最佳类型到最坏类型进行排序">
 
 
 
@@ -420,7 +420,7 @@
 <h2 id="EXPLAIN列的解释："><a href="#EXPLAIN列的解释：" class="headerlink" title="EXPLAIN列的解释："></a>EXPLAIN列的解释：</h2><h3 id="id"><a href="#id" class="headerlink" title="id"></a>id</h3><p>SELECT识别符。这是SELECT的查询序列号，每一个select都会分配一个id</p>
 <h3 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h3><p>SELECT类型</p>
 <h3 id="table"><a href="#table" class="headerlink" title="table"></a>table</h3><p>输出的行所引用的表</p>
-<h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><p>从最佳类型到最坏类型进行排序</p>
+<h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><p>从最佳类型到最坏类型进行排序<br><a id="more"></a></p>
 <p>特殊：NULL<br>mysql能够在优化阶段分解查询语句，在执行阶段用不着再访问表或索引<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select min(id) from users\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">           id: 1</span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        table: NULL</span><br><span class="line">         type: NULL</span><br><span class="line">possible_keys: NULL</span><br><span class="line">          key: NULL</span><br><span class="line">      key_len: NULL</span><br><span class="line">          ref: NULL</span><br><span class="line">         rows: NULL</span><br><span class="line">        Extra: Select tables optimized away</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure></p>
 <h4 id="system"><a href="#system" class="headerlink" title="[system]"></a>[system]</h4><p>表中只有一条数据。 这个类型是特殊的 const 类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; EXPLAIN select * from (select * from admins where id = 1) tmp\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">           id: 1</span><br><span class="line">  select_type: PRIMARY</span><br><span class="line">        table: &lt;derived2&gt;</span><br><span class="line">         type: system</span><br><span class="line">possible_keys: NULL</span><br><span class="line">          key: NULL</span><br><span class="line">      key_len: NULL</span><br><span class="line">          ref: NULL</span><br><span class="line">         rows: 1</span><br><span class="line">        Extra: NULL</span><br><span class="line">*************************** 2. row ***************************</span><br><span class="line">           id: 2</span><br><span class="line">  select_type: DERIVED</span><br><span class="line">        table: admins</span><br><span class="line">         type: const</span><br><span class="line">possible_keys: PRIMARY</span><br><span class="line">          key: PRIMARY</span><br><span class="line">      key_len: 4</span><br><span class="line">          ref: const</span><br><span class="line">         rows: 1</span><br><span class="line">        Extra: NULL</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
 <h4 id="const"><a href="#const" class="headerlink" title="[const]"></a>[const]</h4><p>针对<code>主键或唯一索引</code>的等值查询扫描, 最多只返回一行数据。 const 查询速度非常快, 因为它仅仅读取一次即可。<br>例如下面的这个查询, 它使用了主键索引, 因此 type 就是 const 类型的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">*************************** 1. row ***************************</span><br><span class="line">           id: 1</span><br><span class="line">  select_type: SIMPLE</span><br><span class="line">        table: users</span><br><span class="line">         type: const</span><br><span class="line">possible_keys: PRIMARY</span><br><span class="line">          key: PRIMARY</span><br><span class="line">      key_len: 4</span><br><span class="line">          ref: const</span><br><span class="line">         rows: 1</span><br><span class="line">        Extra: NULL</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
@@ -584,7 +584,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -597,7 +597,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -692,7 +692,7 @@
 </div>
 
 <div class="theme-info">
-  <span class="post-count">博客全站共23.8k字</span>
+  <span class="post-count">博客全站共29.3k字</span>
 </div>
         
 
